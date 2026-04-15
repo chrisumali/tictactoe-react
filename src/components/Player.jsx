@@ -4,7 +4,19 @@ export default function Player({ name, symbol }){
     const [ isEditing, setIsEditing ] = useState(false);
 
     function handleEditClick(){
-        setIsEditing(!isEditing);
+
+        //wrong implementation
+        //since we are still in the same execution cycle, isEditing's value is still false and react is scheduling the execution 
+        //setIsEditing(!isEditing); //expectation: false => true; reality: false => true
+        //setIsEditing(!isEditing); //expectation: true => false; reality: false => true
+
+        //other scenario
+        //react team's correct way of handling value inversion
+        //setIsEditing((editing) => !editing); //false => true
+        //setIsEditing((editing) => !editing); //true => false
+
+        //correct implementation
+        setIsEditing((editing) => !editing);
     }
 
     let playerName = <span className="player-name">{name}</span>;
